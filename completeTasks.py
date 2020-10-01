@@ -5,6 +5,7 @@ import keyboard
 import random
 import win32api
 import win32con
+from PIL import ImageGrab
 
 break_program = False
 
@@ -65,11 +66,66 @@ def wifi2():
 
 
 def drill():
-    for i in range(20):
-        click(1055, 302)
-        click(1508, 302)
-        click(1055, 302)
-        click(1055, 302)
+    for i in range(5):
+        click(1055, 318)
+        time.sleep(.1)
+        click(1512, 318)
+        time.sleep(.1)
+        click(1512, 1088)
+        time.sleep(.1)
+        click(1055, 1088)
+        time.sleep(.1)
+
+
+def telescope():
+    notIsDone = False
+    pix1 = (24, 19, 24)
+    pix2 = (246, 249, 250)
+    pix3 = (123, 116, 112)
+
+    while (notIsDone is False):
+        time.sleep(.3)
+        testPix1 = ImageGrab.grab().getpixel((1899, 1210))
+        testPix2 = ImageGrab.grab().getpixel((1846, 1079))
+        testPix3 = ImageGrab.grab().getpixel((1967, 1216))
+        if testPix1 == pix1 and testPix2 == pix2 and testPix3 == pix3:
+            time.sleep(.1)
+            py.moveTo(1684, 149, duration=.2)
+            py.dragTo(1374, 800, duration=.2)
+            notIsDone = True
+        else:
+            py.moveTo(606, 59, duration=.2)
+            py.click()
+            py.moveTo(2385, 1227, duration=.2)
+            py.click()
+
+
+def inspect1():
+    py.moveTo(1680, 1248, duration=.2)
+    py.click()
+    py.moveTo(644, 177, duration=.2)
+    py.click()
+
+
+def inspect2():
+    x = py.locateOnScreen('inspectRed.png', grayscale=False)
+    py.moveTo(x, duration=.2)
+    py.moveRel(41, 363, duration=.3)
+    py.click()
+
+
+def lowerTemp():
+    py.moveTo(847, 859, duration=.3)
+    while py.locateOnScreen('lowerTemp.png', confidence=0.9) is not None:
+        for i in range(20):
+            py.tripleClick()
+
+
+def raiseTemp():
+    py.moveTo(850, 449, duration=.3)
+    while py.locateOnScreen('raiseTemp.png', confidence=0.9) is not None:
+        for i in range(20):
+            py.tripleClick()
 
 
 def click(x, y):
@@ -79,37 +135,67 @@ def click(x, y):
 
 
 while keyboard.is_pressed('q') is False:
-    if py.locateOnScreen('adminCard.png', confidence=0.9) is not None:
+    if py.locateOnScreen('adminCard.png', confidence=0.9,
+                         grayscale=True) is not None:
         print("admindCard on screen")
-        time.sleep(0.5)
+        time.sleep(3)
         adminCard()
-    elif py.locateOnScreen('QR.png', confidence=0.9) is not None:
+    elif py.locateOnScreen('QR.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("QR on screen")
         QR()
-        time.sleep(0.5)
-    elif py.locateOnScreen('download.png', confidence=0.9) is not None:
+        time.sleep(3)
+    elif py.locateOnScreen('download.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("download on screen")
         download()
-        time.sleep(0.5)
-    elif py.locateOnScreen('waterWheel.png', confidence=0.9) is not None:
+        time.sleep(3)
+    elif py.locateOnScreen('waterWheel.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("waterWheel on screen")
         waterWheel()
-        time.sleep(0.5)
-    elif py.locateOnScreen('waterJug.png', confidence=0.9) is not None:
+        time.sleep(3)
+    elif py.locateOnScreen('waterJug.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("waterJug on screen")
         waterJug()
-        time.sleep(0.5)
-    elif py.locateOnScreen('wifi.png', confidence=0.9) is not None:
+        time.sleep(3)
+    elif py.locateOnScreen('wifi.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("wifi on screen")
         wifi()
-        time.sleep(0.5)
-    elif py.locateOnScreen('wifi2.png', confidence=0.9) is not None:
+        time.sleep(3)
+    elif py.locateOnScreen('wifi2.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("wifi2 on screen")
         wifi2()
-        time.sleep(0.5)
-    elif py.locateOnScreen('drill.png', confidence=0.9) is not None:
+        time.sleep(4)
+    elif py.locateOnScreen('drill.png', confidence=0.9,
+                           grayscale=True) is not None:
         print("drill")
         drill()
-        time.sleep(0.5)
+        time.sleep(4)
+    elif py.locateOnScreen('lowerTemp.png', confidence=0.9,
+                           grayscale=True) is not None:
+        print("lowerTemp")
+        lowerTemp()
+        time.sleep(4)
+    elif py.locateOnScreen('telescope.png', confidence=0.9,
+                           grayscale=True) is not None:
+        print("telescope")
+        telescope()
+        time.sleep(3)
+    elif py.locateOnScreen('inspect1.png') is not None:
+        print("inspect1")
+        inspect1()
+        time.sleep(3)
+    elif py.locateOnScreen('inspect2.png', confidence=0.9) is not None:
+        print("inspect2")
+        inspect2()
+        time.sleep(3)
+    elif py.locateOnScreen('raiseTemp.png', confidence=0.9) is not None:
+        print("raiseTemp")
+        raiseTemp()
+        time.sleep(3)
     else:
         print("Hello?")
