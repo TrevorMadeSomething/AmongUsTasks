@@ -49,6 +49,29 @@ def waterJug():
     py.mouseUp()
 
 
+def wifi():
+    py.moveTo(1573, 326, duration=.3)
+    py.mouseDown()
+    py.moveTo(1564, 1030, duration=.3)
+    py.mouseUp()
+
+
+def wifi2():
+    py.moveTo(1573, 1100, duration=.3)
+    py.mouseDown()
+    py.moveTo(1564, 56, duration=.3)
+    py.mouseUp()
+    time.sleep(4)
+
+
+def drill():
+    for i in range(20):
+        click(1055, 302)
+        click(1508, 302)
+        click(1055, 302)
+        click(1055, 302)
+
+
 def click(x, y):
     win32api.SetCursorPos((x, y))
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
@@ -56,25 +79,37 @@ def click(x, y):
 
 
 while keyboard.is_pressed('q') is False:
-    if py.locateOnScreen('adminCard.png', confidence=0.7) is not None:
+    if py.locateOnScreen('adminCard.png', confidence=0.9) is not None:
         print("admindCard on screen")
         time.sleep(0.5)
         adminCard()
-    elif py.locateOnScreen('QR.png', confidence=0.7) is not None:
+    elif py.locateOnScreen('QR.png', confidence=0.9) is not None:
         print("QR on screen")
         QR()
         time.sleep(0.5)
-    elif py.locateOnScreen('download.png', confidence=0.7) is not None:
+    elif py.locateOnScreen('download.png', confidence=0.9) is not None:
         print("download on screen")
         download()
         time.sleep(0.5)
-    elif py.locateOnScreen('waterWheel.png', confidence=0.7) is not None:
+    elif py.locateOnScreen('waterWheel.png', confidence=0.9) is not None:
         print("waterWheel on screen")
         waterWheel()
         time.sleep(0.5)
-    elif py.locateOnScreen('waterJug.png', confidence=0.7) is not None:
+    elif py.locateOnScreen('waterJug.png', confidence=0.9) is not None:
         print("waterJug on screen")
         waterJug()
+        time.sleep(0.5)
+    elif py.locateOnScreen('wifi.png', confidence=0.9) is not None:
+        print("wifi on screen")
+        wifi()
+        time.sleep(0.5)
+    elif py.locateOnScreen('wifi2.png', confidence=0.9) is not None:
+        print("wifi2 on screen")
+        wifi2()
+        time.sleep(0.5)
+    elif py.locateOnScreen('drill.png', confidence=0.9) is not None:
+        print("drill")
+        drill()
         time.sleep(0.5)
     else:
         print("Hello?")
