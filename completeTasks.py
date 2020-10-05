@@ -108,7 +108,8 @@ def inspect1():
 
 
 def inspect2():
-    x = py.locateOnScreen('inspectRed.png', grayscale=False)
+    x = py.locateOnScreen('inspectRed.png', grayscale=False, confidence=.9)
+    print(x)
     py.moveTo(x, duration=.2)
     py.moveRel(41, 363, duration=.3)
     py.click()
@@ -142,6 +143,14 @@ def wiresLeft():
     py.mouseUp()
 
 
+def chute():
+    py.moveTo(1693, 564, duration=.2)
+    py.mouseDown()
+    py.moveTo(1693, 1394, duration=.2)
+    time.sleep(2)
+    py.mouseUp()
+
+
 def lowerTemp():
     py.moveTo(847, 859, duration=.3)
     while py.locateOnScreen('lowerTemp.png', confidence=0.9) is not None:
@@ -156,16 +165,121 @@ def raiseTemp():
             py.tripleClick()
 
 
+def O2():
+    for i in range(2):
+        py.moveTo(1138, 350, duration=.2)
+        py.mouseDown()
+        py.moveTo(1120, 1400, duration=.2)
+        py.mouseUp()
+        time.sleep(2.5)
+        py.moveTo(1310, 965, duration=.2)
+        py.click()
+        time.sleep(1.5)
+
+
+def key():
+    target = py.locateOnScreen('keyTarget.png',
+                               region=(1083, 52, 700, 1350),
+                               confidence=.95)
+    py.moveTo(635, 1035, duration=.3)
+    py.mouseDown()
+    py.moveTo(target[0] + (110), target[1] + (110), duration=.3)
+    py.mouseUp()
+    py.moveTo(1225, 151, duration=.2)
+    py.mouseDown()
+    py.moveTo(1947, 1048, duration=.2)
+    py.mouseUp()
+
+
+def tree():
+    yellow = py.locateOnScreen('treeY.png',
+                               region=(664, 290, 270, 555),
+                               confidence=.9)
+    green = py.locateOnScreen('treeY.png',
+                              region=(984, 413, 270, 655),
+                              confidence=.9)
+    red = py.locateOnScreen('treeY.png',
+                            region=(1296, 290, 270, 700),
+                            confidence=.9)
+    blue = py.locateOnScreen('treeY.png',
+                             region=(1631, 505, 270, 555),
+                             confidence=.9)
+    py.moveTo(yellow[0], yellow[1], duration=.2)
+    py.mouseDown()
+    py.moveTo(708, 808, duration=.2)
+    py.mouseUp()
+    py.moveTo(green[0], green[1], duration=.2)
+    py.mouseDown()
+    py.moveTo(1095, 390, duration=.2)
+    py.mouseUp()
+    py.moveTo(red[0], red[1], duration=.2)
+    py.mouseDown()
+    py.moveTo(1435, 936, duration=.2)
+    py.mouseUp()
+    py.moveTo(blue[0], blue[1], duration=.2)
+    py.mouseDown()
+    py.moveTo(1762, 482, duration=.2)
+    py.mouseUp()
+
+
+def chart():
+    chartStart = py.locateOnScreen('chartStart.png',
+                                   region=(684, 347, 125, 744),
+                                   confidence=.6)
+    node1 = py.locateOnScreen('chartNode.png',
+                              region=(995, 347, 45, 744),
+                              confidence=.3)
+    node2 = py.locateOnScreen('chartNode.png',
+                              region=(1260, 347, 45, 744),
+                              confidence=.3)
+    node3 = py.locateOnScreen('chartNode.png',
+                              region=(1520, 347, 45, 744),
+                              confidence=.4)
+    node4 = py.locateOnScreen('chartFinal.png',
+                              region=(1785, 347, 45, 744),
+                              confidence=.5)
+    # series of movements from node to node
+    # calling funcation that takes (startX, startY, slopeToTravel, endingX)
+    chartMouse(chartStart[0], chartStart[1],
+               ((node1[1] - chartStart[1]) / (node1[0] - chartStart[0])), 1100)
+    chartMouse(node1[0], node1[1],
+               ((node2[1] - node1[1]) / (node2[0] - node1[0])), 1300)
+    chartMouse(node2[0], node2[1],
+               ((node3[1] - node2[1]) / (node3[0] - node2[0])), 1580)
+    chartMouse(node3[0], node3[1],
+               ((node4[1] - node3[1]) / (node4[0] - node3[0])), 1850)
+
+
+def chartMouse(mouseX, mouseY, slope, destination):
+    py.moveTo(mouseX, mouseY, duration=.1)
+    py.mouseDown()
+    while (mouseX < destination):
+        mouseX += 10
+        mouseY += 10 * slope
+        py.moveTo(mouseX, mouseY, duration=.05)
+    py.mouseUp()
+    time.sleep(.2)
+
+
 while keyboard.is_pressed('q') is False:
     if py.locateOnScreen('adminCard.png', grayscale=True) is not None:
         print("admindCard on screen")
         time.sleep(3)
         adminCard()
+    elif py.locateOnScreen('chart.png', grayscale=True) is not None:
+        print("chart on screen")
+        chart()
+        time.sleep(3)
+    elif py.locateOnScreen('key.png', grayscale=True) is not None:
+        print("keys on screen")
+        key()
+        time.sleep(3)
     elif py.locateOnScreen('QR.png', grayscale=True) is not None:
         print("QR on screen")
         QR()
         time.sleep(3)
-    elif py.locateOnScreen('download.png', grayscale=True) is not None:
+    elif py.locateOnScreen('download.png', grayscale=True,
+                           confidence=.9) is not None:
         print("download on screen")
         download()
         time.sleep(3)
@@ -201,7 +315,7 @@ while keyboard.is_pressed('q') is False:
         print("inspect1")
         inspect1()
         time.sleep(3)
-    elif py.locateOnScreen('inspect2.png') is not None:
+    elif py.locateOnScreen('inspect2.png', confidence=.9) is not None:
         print("inspect2")
         inspect2()
         time.sleep(3)
@@ -209,10 +323,22 @@ while keyboard.is_pressed('q') is False:
         print("raiseTemp")
         raiseTemp()
         time.sleep(3)
-    elif py.locateOnScreen('yellowLeft.png', confidence=.95,
+    elif py.locateOnScreen('wires.png', confidence=.9,
                            grayscale=True) is not None:
         print("wiresLeft")
         wiresLeft()
+        time.sleep(3)
+    elif py.locateOnScreen('chute.png', grayscale=True) is not None:
+        print("chute is on screen")
+        chute()
+        time.sleep(3)
+    elif py.locateOnScreen('O2.png', grayscale=True) is not None:
+        print("O2 is on screen")
+        O2()
+        time.sleep(3)
+    elif py.locateOnScreen('tree.png', grayscale=True) is not None:
+        print("tree on screen")
+        tree()
         time.sleep(3)
     else:
         print("Hello?")
