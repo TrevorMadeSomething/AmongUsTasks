@@ -3,7 +3,7 @@
 
 ## Table of contents
 * [General info](#general-info)
-* [Screenshots](#screenshots)
+* [Demonstration](#demonstration)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Features](#features)
@@ -13,8 +13,9 @@
 ## General info
 This project aims to automate "tasks" that the player is required to complete in the game "Among Us" Tasks
 
-## Screenshots
-After a brief peroid of image recognition, the script will automatically drag wires from the left to it's corresponding wire on the right.
+## Demonstration
+### After a brief peroid of image recognition, the script will automatically drag wires from the left to it's corresponding wire on the right.
+
 ![Wires](./img/wires.gif)
 
 ## Technologies
