@@ -23,7 +23,7 @@ This project aims to automate "tasks" that the player is required to complete in
 * Pillow
 
 ## Setup
-Download all files into one folder and ensure you have python installed locally
+Download all files into one folder and ensure you have python 3+ installed locally
 
 ## Code Examples
 Simply run completeTasks.py in a folder with all the assets and never worry about touching your mouse again!
