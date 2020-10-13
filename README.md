@@ -14,12 +14,12 @@
 This project aims to automate "tasks" that the player is required to complete in the game "Among Us" Tasks
 
 ## Screenshots
-![Example screenshot](./img/wires.gif)
+After a brief peroid of image recognition, the script will automatically drag wires from the left to it's corresponding wire on the right.
+![Wires](./img/wires.gif)
 
 ## Technologies
-* Tech 1 - version 1.0
-* Tech 2 - version 2.0
-* Tech 3 - version 3.0
+* Pyautogui
+* Pillow
 
 ## Setup
 Download all files into one folder and ensure you have python installed locally
