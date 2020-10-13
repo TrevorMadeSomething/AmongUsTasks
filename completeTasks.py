@@ -1,3 +1,6 @@
+# @Author Trevor Jarvis 2020
+# Script to automate the completion of 'tasks' in the video game
+# 'Among Us'
 from pyautogui import *
 import pyautogui as py
 import time
@@ -9,7 +12,14 @@ from PIL import ImageGrab
 
 break_program = False
 
+# This script runs a continuous loop at the bottom of the code that checks
+# the current screen against several sample images that I have provided
+# in the assets folder. All the images are unique enough that they will
+# only be positivley ID'd when the given tasks is required to be completed.
 
+
+# Some tasks are simple and only us moveTo() and click() functions. They're
+# simple and can easily be understood by reading the pyautogui docs
 def adminCard():
     py.moveTo(1071, 1092, duration=0.3)
     py.click()
@@ -79,21 +89,30 @@ def drill():
 
 def telescope():
     notIsDone = False
+    # 3 reference pixels that denote the correct subtasks of this task have
+    # been found on screen
     pix1 = (24, 19, 24)
     pix2 = (246, 249, 250)
     pix3 = (123, 116, 112)
 
     while (notIsDone is False):
         time.sleep(.3)
+        # close and reopen the task until our 3 sample pixels are matched
+
         testPix1 = ImageGrab.grab().getpixel((1899, 1210))
         testPix2 = ImageGrab.grab().getpixel((1846, 1079))
         testPix3 = ImageGrab.grab().getpixel((1967, 1216))
+
+        # if statment will return true if our pixels match our goal
         if testPix1 == pix1 and testPix2 == pix2 and testPix3 == pix3:
+            # simple move to complete task
             time.sleep(.1)
             py.moveTo(1684, 149, duration=.2)
             py.dragTo(1374, 800, duration=.2)
             notIsDone = True
         else:
+            # test pixels were wrong and thus we have the wrong subtask
+            # let us reset the task and fish for the correct one
             py.moveTo(606, 59, duration=.2)
             py.click()
             py.moveTo(2385, 1227, duration=.2)
@@ -108,14 +127,20 @@ def inspect1():
 
 
 def inspect2():
+    # need to find the vial that is red and click the button 363 pixels down
     x = py.locateOnScreen('inspectRed.png', grayscale=False, confidence=.9)
-    print(x)
     py.moveTo(x, duration=.2)
     py.moveRel(41, 363, duration=.3)
     py.click()
 
 
+# This function is fairly demanding because of the many uses of
+# locateOnScreen()
+# TODO change the locateOnScreen to another function that requires less
+# overhead
 def wiresLeft():
+    # find all the left and right wires so tht we can simply drag them to their
+    # corresponding wire
     yellowLeft = locateOnScreen('yellowLeft.png', confidence=.95)
     blueLeft = locateOnScreen('blueLeft.png', confidence=.95)
     redLeft = locateOnScreen('redLeft.png', confidence=.95)
@@ -155,6 +180,7 @@ def lowerTemp():
     py.moveTo(847, 859, duration=.3)
     while py.locateOnScreen('lowerTemp.png', confidence=0.9) is not None:
         for i in range(20):
+            # triple click used to speed up the clicking
             py.tripleClick()
 
 
@@ -192,6 +218,10 @@ def key():
 
 
 def tree():
+    # the bars all look the same so a picture couldnt be used to find the
+    # slider in the entire screen. Here a region was used to find the four
+    # different ones. Then the slider is simply moved to the fixed position
+    # of its respective goal
     yellow = py.locateOnScreen('treeY.png',
                                region=(664, 290, 270, 555),
                                confidence=.9)
@@ -250,6 +280,7 @@ def chart():
                ((node4[1] - node3[1]) / (node4[0] - node3[0])), 1850)
 
 
+# helper function for chart()
 def chartMouse(mouseX, mouseY, slope, destination):
     py.moveTo(mouseX, mouseY, duration=.1)
     py.mouseDown()
@@ -261,6 +292,16 @@ def chartMouse(mouseX, mouseY, slope, destination):
     time.sleep(.2)
 
 
+def maze():
+    py.moveTo()
+
+
+# loop that runs until a picture that's associated with a task is found on
+# screen. The argument greyscale is provided to reduce the significant runtime
+# that the locateOnScreen() function requres. The argument confidence is used
+# when the image might be moving or have some element of randomness in its
+# GUI
+# TODO change locateOnScreen to simple pixel matching to reduce overhead
 while keyboard.is_pressed('q') is False:
     if py.locateOnScreen('adminCard.png', grayscale=True) is not None:
         print("admindCard on screen")
@@ -339,6 +380,10 @@ while keyboard.is_pressed('q') is False:
     elif py.locateOnScreen('tree.png', grayscale=True) is not None:
         print("tree on screen")
         tree()
+        time.sleep(3)
+    elif py.locateOnScreen('maze.png', grayscale=True) is not None:
+        print("maze on screen")
+        maze()
         time.sleep(3)
     else:
         print("Hello?")
