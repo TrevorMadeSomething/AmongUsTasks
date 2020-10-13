@@ -9,7 +9,6 @@
 * [Features](#features)
 * [Status](#status)
 * [Inspiration](#inspiration)
-* [Contact](#contact)
 
 ## General info
 This project aims to automate "tasks" that the player is required to complete in the game "Among Us" Tasks
