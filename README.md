@@ -14,7 +14,7 @@
 This project aims to automate "tasks" that the player is required to complete in the game "Among Us" Tasks
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./img/wires.gif)
 
 ## Technologies
 * Tech 1 - version 1.0
