@@ -1,5 +1,5 @@
 # Among Us Task Automation
-> Welcome to my pet project of laziness! While playing this amazing game with my friends, I had the thought that "Hey! I'm a competent developer... I bet I could make a script to automate all of this and save myself alot of work!" Well, I was wrong. But here we are anyways down several hours of my life but also free of the burden from having to touch my mouse ever again! (While playing the game, #TODO automate life)
+> Welcome to my pet project of laziness! While playing this amazing game with my friends, I had the thought that "Hey! I'm a competent developer... I bet I could make a script to automate all of this and save myself alot of work!" Well, I was wrong, it didn't save me any work or time. But here we are anyways down several hours of my life but also free of the burden from having to touch my mouse ever again! (While playing the game, #TODO automate life)
 
 ## Table of contents
 * [General info](#general-info)
